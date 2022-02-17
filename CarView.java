@@ -18,15 +18,10 @@ public class CarView extends JFrame{
     private static final int Y = 800;
 
     // The controller member
-    CarController cc;
 
     DrawPanel drawPanel;
 
     JPanel controlPanel = new JPanel();
-
-
-
-
 
     JPanel gasPanel = new JPanel();
     JSpinner gasSpinner = new JSpinner();
@@ -44,9 +39,8 @@ public class CarView extends JFrame{
     JButton stopButton = new JButton("Stop all cars");
 
     // Constructor
-    public CarView(String framename, CarGroup carGroup){
-        this.cc = cc;
-        this.drawPanel = new DrawPanel(X, Y-240, carGroup);
+    public CarView(String framename){
+        this.drawPanel = new DrawPanel(X, Y-240);
         initComponents(framename);
     }
 
@@ -59,8 +53,6 @@ public class CarView extends JFrame{
         this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
         this.add(drawPanel);
-
-
 
         SpinnerModel spinnerModel =
                 new SpinnerNumberModel(0, //initial value

@@ -26,9 +26,7 @@ public class Volvo240 extends Car{
      * acceleration of the car in increment and decrement speed
      */
     public double speedFactor(){
-        System.out.println("BBBB");
         return getEnginePower() * 0.01 * trimFactor;
-
     }
 }
 

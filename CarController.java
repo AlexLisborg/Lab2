@@ -12,30 +12,18 @@ import java.util.ArrayList;
 public class CarController {
     // member fields:
 
-    // The delay (ms) corresponds to 20 updates a sec (hz)
-    private final int delay = 50;
+
     // The timer is started with an listener (see below) that executes the statements
     // each step between delays.
-    private Timer timer = new Timer(delay, new TimerListener());
+
 
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
     // A list of cars, modify if needed
-    private CarGroup carGroup;
 
-    public CarController(String name, CarGroup carGroup){
-        this.drawPanel = new DrawPanel(800, 800 -240, carGroup);
-        this.carGroup = carGroup;
-        frame = new CarView(name, this.carGroup);
-
-
-    }
-
-    public void addToCarGroup(Car car) {
-        carGroup.add(car);
-    }
-    public CarGroup getCarGroup() {
-        return carGroup;
+    public CarController(String name){
+        this.drawPanel = new DrawPanel(800, 800 -240);
+        frame = new CarView(name);
     }
 
 
@@ -43,35 +31,23 @@ public class CarController {
 
     public static void main(String[] args) {
         // Instance of this class
-        CarController cc = new CarController("CarSim 1.0", new CarGroup());
+        CarController cc = new CarController("CarSim 1.0");
 
+        Car saab95 = new Saab95();
+        saab95.setY(100);
+        Car scania = new Scania();
+        scania.setY(200);
+        cc.frame.drawPanel.getCarGroup().add(new Volvo240());
+        cc.frame.drawPanel.getCarGroup().add(saab95);
+        cc.frame.drawPanel.getCarGroup().add(scania);
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
 
         // Start the timer
-        cc.timer.start();
     }
 
     /* Each step the TimerListener moves all the cars in the list and tells the
     * view to update its images. Change this method to your needs.
     * */
-    private class TimerListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            for (Car car : frame.drawPanel.getCarGroup().getCars()) {
-                car.move();
-                // repaint() calls the paintComponent method of the panel
-                frame.drawPanel.repaint();
-                if (car.getX() > 700) {
-                    car.stopEngine();
-                    car.setAngle(180);
-                    car.startEngine();
-                }
-                else if (car.getX() < 0) {
-                    car.stopEngine();
-                    car.setAngle(0);
-                    car.startEngine();
-                }
-            }
-        }
-    }
+
 }

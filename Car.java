@@ -236,7 +236,6 @@ public abstract class Car implements Movable, Positionable{
         if (n > 1 || n < 0) throw new RuntimeException("input needs to be in interval [0, 1]");
         else {
             incrementSpeed(n);
-            System.out.println(n);
         }
 
     }

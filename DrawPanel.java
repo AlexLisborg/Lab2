@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -9,23 +11,19 @@ import javax.swing.*;
 public class DrawPanel extends JPanel{
 
     private CarGroup carGroup;
+    private Timer timer;
 
     // Just a single image, TODO: Generalize
 
     // Initializes the panel and reads the images
-    public DrawPanel(int x, int y, CarGroup carGroup) {
+    public DrawPanel(int x, int y) {
         this.setDoubleBuffered(true);
         this.setPreferredSize(new Dimension(x, y));
         this.setBackground(Color.magenta);
         // Print an error message in case file is not found with a try/catch block
-        Car saab95 = new Saab95();
-        saab95.setY(100);
-        Car scania = new Scania();
-        scania.setY(200);
-        carGroup.add(new Volvo240());
-        carGroup.add(saab95);
-        carGroup.add(scania);
-        this.carGroup = carGroup;
+        this.timer = new Timer(delay, new TimerListener());
+        this.timer.start();
+        this.carGroup = new CarGroup();
     }
 
     // This method is called each time the panel updates/refreshes/repaints itself
@@ -48,5 +46,31 @@ public class DrawPanel extends JPanel{
 
     public CarGroup getCarGroup() {
         return carGroup;
+    }
+
+
+   //DRAWPANEL UPDATE TIMER
+    private final int delay = 50;
+
+
+
+    private class TimerListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            for (Car car : carGroup.getCars()) {
+                car.move();
+                // repaint() calls the paintComponent method of the panel
+                repaint();
+                if (car.getX() > 700) {
+                    car.stopEngine();
+                    car.setAngle(180);
+                    car.startEngine();
+                }
+                else if (car.getX() < 0) {
+                    car.stopEngine();
+                    car.setAngle(0);
+                    car.startEngine();
+                }
+            }
+        }
     }
 }
