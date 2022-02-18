@@ -16,14 +16,14 @@ public class DrawPanel extends JPanel{
     // Just a single image, TODO: Generalize
 
     // Initializes the panel and reads the images
-    public DrawPanel(int x, int y) {
+    public DrawPanel(int x, int y, CarGroup carGroup) {
         this.setDoubleBuffered(true);
         this.setPreferredSize(new Dimension(x, y));
         this.setBackground(Color.magenta);
         // Print an error message in case file is not found with a try/catch block
         this.timer = new Timer(delay, new TimerListener());
         this.timer.start();
-        this.carGroup = new CarGroup();
+        this.carGroup = carGroup;
     }
 
     // This method is called each time the panel updates/refreshes/repaints itself

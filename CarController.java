@@ -22,8 +22,10 @@ public class CarController {
     // A list of cars, modify if needed
 
     public CarController(String name){
-        this.drawPanel = new DrawPanel(800, 800 -240);
-        frame = new CarView(name);
+        carGroup = new CarGroup();
+        drawPanel = new DrawPanel(800, 800 -240, carGroup);
+        frame = new CarView(name, drawPanel);
+
     }
 
 
